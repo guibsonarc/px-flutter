@@ -31,8 +31,11 @@ public class SwiftMercadoPagoMobileCheckoutPlugin: NSObject, FlutterPlugin, PXLi
     }
     
     private func startCheckout(publicKey: String, preferenceId: String) {
-        let checkout = MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init(publicKey: publicKey, preferenceId: preferenceId))
-        
+        let builder = MercadoPagoCheckoutBuilder.init(publicKey: publicKey, preferenceId: preferenceId)
+        let config = PXAdvancedConfiguration()
+        builder.setAdvancedConfiguration(config: config)
+        builder.setColor(checkoutColor: UIColor(red: 0.94, green: 0.01, blue: 0.39, alpha: 1.00))
+        let checkout = MercadoPagoCheckout.init(builder: builder)
         handleNavigationBar(isMercadoPagoActive: true)
         checkout.start(navigationController: controller(), lifeCycleProtocol: self)
     }
